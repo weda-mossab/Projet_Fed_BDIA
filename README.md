@@ -1,30 +1,10 @@
-# Projet Fédérateur Big Data & IA
+# 🚀 Projet Fédérateur Big Data & IA
 
 ## Description
 Ce projet est réalisé dans le cadre du 3ème année Big Data et Intelligence Artificielle.  
 Il combine un backend en Python pour le traitement des données et un frontend pour l’interface utilisateur.
 
-## Structure du projet
-
-Projet_Fed_BDIA/
-│
-├── backend/
-│ ├── app.py # Script principal du backend
-│ ├── requirements.txt # Dépendances Python
-│ └── venv/ # Environnement virtuel (à ignorer dans Git)
-│
-├── frontend/
-│ ├── package.json
-│ ├── src/
-│ │ ├── components/
-│ │ └── pages/
-│ └── .gitignore
-│
-├── .gitignore
-└── README.md
-
-
-## Installation
+## ⚙️ Installation
 
 ### Backend
 cd backend
@@ -38,12 +18,12 @@ cd frontend
 npm install
 npm start
 
-## Utilisation
+## ▶️ Utilisation
 1. Lancer le backend (python app.py)
 2. Lancer le frontend (npm start)
 3. Accéder à l’interface sur http://localhost:3000
 
-## Contribution
+## 🤝 Contribution
 Faire un fork du projet
 Créer une branche pour vos modifications
 Faire un pull request
