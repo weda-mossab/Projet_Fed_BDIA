@@ -13,3 +13,6 @@ def add_numbers():
     b = data.get('b', 0)
     return jsonify({"result": a + b})
 
+@api_blueprint.route('/test', methods=['GET'])
+def test():
+    return jsonify({"status": "success", "message": "Backend Flask is working!"})

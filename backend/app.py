@@ -1,15 +1,15 @@
 from flask import Flask
 from api.routes import api_blueprint
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)  # autorise React à communiquer
 
-# Enregistrement des routes de l’API
 app.register_blueprint(api_blueprint, url_prefix="/api")
 
-@app.route('/')
+@app.route("/")
 def home():
-    return {"message": "Bienvenue sur ton backend Flask 🚀"}
+    return {"message": "Backend Flask running!"}
 
 if __name__ == "__main__":
     app.run(debug=True)
-
