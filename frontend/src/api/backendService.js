@@ -1,32 +1,60 @@
-const API_URL = "http://127.0.0.1:5000/api";
+/**
+ * Backend Service
+ * Service layer for backend API communication
+ */
 
+import apiClient, { APIError } from '../utils/apiClient';
+import API_CONFIG from '../config/api.config';
+
+/**
+ * Test backend connection
+ * @returns {Promise<{status: string, message: string}>}
+ */
 export async function testBackend() {
   try {
-    const response = await fetch(`${API_URL}/test`);
-    return await response.json();
+    return await apiClient.get(API_CONFIG.endpoints.test);
   } catch (error) {
-    return { error: "Cannot reach backend" };
+    if (error instanceof APIError) {
+      throw error;
+    }
+    throw new Error('Cannot reach backend');
   }
 }
 
+/**
+ * Get hello message from backend
+ * @returns {Promise<{message: string}>}
+ */
 export async function sayHello() {
   try {
-    const response = await fetch(`${API_URL}/hello`);
-    return await response.json();
-  } catch (err) {
-    return { error: "Backend not available" };
+    return await apiClient.get(API_CONFIG.endpoints.hello);
+  } catch (error) {
+    if (error instanceof APIError) {
+      throw error;
+    }
+    throw new Error('Backend not available');
   }
 }
 
+/**
+ * Add two numbers
+ * @param {number} a - First number
+ * @param {number} b - Second number
+ * @returns {Promise<{result: number}>}
+ */
 export async function addNumbers(a, b) {
   try {
-    const response = await fetch(`${API_URL}/add`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ a, b })
-    });
-    return await response.json();
-  } catch (err) {
-    return { error: "Error calling API" };
+    return await apiClient.post(API_CONFIG.endpoints.add, { a, b });
+  } catch (error) {
+    if (error instanceof APIError) {
+      throw error;
+    }
+    throw new Error('Error calling API');
   }
 }
+
+export default {
+  testBackend,
+  sayHello,
+  addNumbers,
+};

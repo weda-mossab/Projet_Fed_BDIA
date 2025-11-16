@@ -1,18 +1,61 @@
-from flask import Blueprint, jsonify, request
+from fastapi import APIRouter, HTTPException
+from pydantic import BaseModel, Field
+from typing import Optional
 
-api_blueprint = Blueprint('api', __name__)
+router = APIRouter()
 
-@api_blueprint.route('/hello', methods=['GET'])
+# Request Models
+class AddRequest(BaseModel):
+    a: int = Field(..., description="First number", example=7)
+    b: int = Field(..., description="Second number", example=5)
+
+# Response Models
+class MessageResponse(BaseModel):
+    message: str = Field(..., description="Response message")
+
+class TestResponse(BaseModel):
+    status: str = Field(..., description="Status of the response")
+    message: str = Field(..., description="Response message")
+
+class AddResponse(BaseModel):
+    result: int = Field(..., description="Sum of the two numbers")
+
+class ErrorResponse(BaseModel):
+    error: str = Field(..., description="Error message")
+    detail: Optional[str] = Field(None, description="Error details")
+
+@router.get('/hello', response_model=MessageResponse, summary="Get hello message")
 def hello():
-    return jsonify({"message": "Hello depuis ton API Flask !"})
+    """
+    Returns a hello message from the API.
+    
+    - **Returns**: A message response
+    """
+    return MessageResponse(message="Hello depuis ton API FastAPI !")
 
-@api_blueprint.route('/add', methods=['POST'])
-def add_numbers():
-    data = request.get_json()
-    a = data.get('a', 0)
-    b = data.get('b', 0)
-    return jsonify({"result": a + b})
+@router.post('/add', response_model=AddResponse, summary="Add two numbers")
+def add_numbers(request: AddRequest):
+    """
+    Adds two numbers together.
+    
+    - **a**: First number
+    - **b**: Second number
+    - **Returns**: The sum of the two numbers
+    """
+    try:
+        result = request.a + request.b
+        return AddResponse(result=result)
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=f"Error calculating sum: {str(e)}")
 
-@api_blueprint.route('/test', methods=['GET'])
+@router.get('/test', response_model=TestResponse, summary="Test backend connection")
 def test():
-    return jsonify({"status": "success", "message": "Backend Flask is working!"})
+    """
+    Tests the backend connection.
+    
+    - **Returns**: Status and message indicating the backend is working
+    """
+    return TestResponse(
+        status="success",
+        message="Backend FastAPI is working!"
+    )
