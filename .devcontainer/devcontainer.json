@@ -1,0 +1,16 @@
+{
+  "name": "Sentiment Analysis Dev Environment",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+  "features": {
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {}
+  },
+  "extensions": [
+    "ms-kubernetes-tools.vscode-kubernetes-tools",
+    "ms-azuretools.vscode-docker",
+    "redhat.vscode-yaml",
+    "GitHub.vscode-github-actions"
+  ],
+  "postCreateCommand": "kubectl version --client && kind version"
+}
